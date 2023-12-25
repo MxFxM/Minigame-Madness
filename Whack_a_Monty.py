@@ -1,6 +1,7 @@
 from image import *
 import time
 from pynput.mouse import Button, Controller
+from threading import Thread
 
 mouse = Controller()
 
@@ -8,12 +9,23 @@ refreshRate = 10
 
 montyTexture = None
 
+screen = None
+subScreen = None
+screen_updated_flag = False
+
 def setup():
     global montyTexture
     montyTexture = Image.open("assets/Whack a Monty/Monty.png")
+    sc = Thread(target=captureScreen, daemon=True)
+    sc.start()
 def update():
-    subScreen = getScreenshot(mainScreen=False)
+    global screen
+    global subScreen
+    global screen_updated_flag
     starttime = time.time()
+    if screen_updated_flag:
+        subScreen = screen.copy()
+        screen_updated_flag = False
     screenshottime = time.time()
 
     locatedMontyBounds = None
@@ -43,3 +55,10 @@ def update():
     print(f"Move: {(movetime-locatetime)*1000:.1f}ms")
     print(f"Frame: {(movetime-starttime)*1000:.1f}ms")
     print()
+def captureScreen():
+    global screen
+    global screen_updated_flag
+
+    while True:
+        screen = getScreenshot(mainScreen=False)
+        screen_updated_flag = True
