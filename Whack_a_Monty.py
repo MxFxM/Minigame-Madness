@@ -10,7 +10,11 @@ def setup():
 def update():
     subScreen = getScreenshot(mainScreen=False)
 
-    locatedMontyBounds = pyautogui.locate(montyTexture, subScreen, confidence=0.85)
+    locatedMontyBounds = None
+    try:
+        locatedMontyBounds = pyautogui.locate(montyTexture, subScreen, confidence=0.85)
+    except Exception as _:
+        pass
 
     # If a monty is located, then click on it.
     if locatedMontyBounds is not None:
