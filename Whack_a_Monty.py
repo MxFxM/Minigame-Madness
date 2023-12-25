@@ -13,12 +13,15 @@ def setup():
     montyTexture = Image.open("assets/Whack a Monty/Monty.png")
 def update():
     subScreen = getScreenshot(mainScreen=False)
+    starttime = time.time()
+    screenshottime = time.time()
 
     locatedMontyBounds = None
     try:
         locatedMontyBounds = pyautogui.locate(montyTexture, subScreen, confidence=0.85)
     except Exception as _:
         pass
+    locatetime = time.time()
 
     # If a monty is located, then click on it.
     if locatedMontyBounds is not None:
@@ -34,3 +37,9 @@ def update():
         mouse.release(Button.left)
 
     movetime = time.time()
+
+    print(f"Screen: {(screenshottime-starttime)*1000:.1f}ms")
+    print(f"Locate: {(locatetime-screenshottime)*1000:.1f}ms")
+    print(f"Move: {(movetime-locatetime)*1000:.1f}ms")
+    print(f"Frame: {(movetime-starttime)*1000:.1f}ms")
+    print()

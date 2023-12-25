@@ -50,15 +50,15 @@ if __name__ == "__main__":
 
     while not applicationClosed:
         # Amount of time in seconds required for each frame. 
-        frameDuration = 1.0 / eval(f"{gameScript}.refreshRate")
+        #frameDuration = 1.0 / eval(f"{gameScript}.refreshRate")
 
-        startTime = time.time() 
+        #startTime = time.time() 
 
         eval(f"{gameScript}.update()")
 
-        endTime = time.time() 
-        difference = endTime - startTime
-        time.sleep(max(frameDuration - difference, 0))
+        #endTime = time.time() 
+        #difference = endTime - startTime
+        #time.sleep(max(frameDuration - difference, 0))
 
         # Emergency exits the program when the mouse is in the top left corner. 
         mousex, mousey = pyautogui.position()
