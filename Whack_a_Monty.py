@@ -1,4 +1,8 @@
 from image import *
+import time
+from pynput.mouse import Button, Controller
+
+mouse = Controller()
 
 refreshRate = 10
 
@@ -21,5 +25,12 @@ def update():
         boundCenter = pyautogui.center(locatedMontyBounds)
         montyPosition = localToGlobalPosition(boundCenter, mainScreen=False)
 
-        pyautogui.moveTo(montyPosition[0], montyPosition[1], _pause=False)
-        pyautogui.drag(0, 1, 0.11, _pause=False, button='left')
+        mouse.position = (montyPosition[0], montyPosition[1]+10)
+
+        mouse.press(Button.left)
+        time.sleep(0.015)
+        mouse.position = (montyPosition[0], montyPosition[1]+8)
+        time.sleep(0.015)
+        mouse.release(Button.left)
+
+    movetime = time.time()
