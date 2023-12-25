@@ -2,6 +2,7 @@ from image import *
 import time
 from pynput.mouse import Button, Controller
 from threading import Thread
+from random import randint
 
 mouse = Controller()
 
@@ -40,11 +41,11 @@ def update():
         boundCenter = pyautogui.center(locatedMontyBounds)
         montyPosition = localToGlobalPosition(boundCenter, mainScreen=False)
 
-        mouse.position = (montyPosition[0], montyPosition[1]+10)
-
-        mouse.press(Button.left)
         time.sleep(0.015)
         mouse.position = (montyPosition[0], montyPosition[1]+8)
+        mouse.press(Button.left)
+        time.sleep(0.015)
+        mouse.position = (montyPosition[0]+randint(-2,2), montyPosition[1]+randint(-2,2))
         time.sleep(0.015)
         mouse.release(Button.left)
 
